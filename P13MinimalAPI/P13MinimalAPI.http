@@ -1,0 +1,6 @@
+@P13MinimalAPI_HostAddress = http://localhost:5005
+
+GET {{P13MinimalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,21 @@
+﻿
+Wdrażamy autoryzację JWT
+
+1) Zaczynamy od API
+	- dodaliśmy konfiguracje w program.cs
+	- dodaliśmy AuthController oraz AuthService
+	- dodaliśmy atrybuty [Authorize] do kontrolerów, które chcemy zabezpieczyć
+	- dodaliśmy użytkownika do bazy danych
+
+2) wdrożyliśmy autoryzacje po stronie klienta webowego (blazor)
+	- dodaliśmy klasę AuthService (w shared bo będzie współdzielona z komponentami)
+	- dodaliśmy klasę CustomAuthenticationStateProvider, która służy do przechowywania informacji o zalogowanym użytkowniku
+	- dodaliśmy strony logowania i rejestracji
+	- wyświetliśmy informacje o zalogowanym użytkowniku na stronie głównej
+
+3) wdrożyliśmy autoryzacje po stronie klienta WPF
+  - dodaliśmy widok logowania
+  - dodaliśmy klasę LoginViewModel
+  - wstrzykleniśmy serwis AuthService do LoginViewModel
+  - zaimplementowaliśmy logikę przechowywania tokena w pamieci
+
