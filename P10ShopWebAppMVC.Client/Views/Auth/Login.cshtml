@@ -1,0 +1,38 @@
+﻿@model P06Shop.Shared.Auth.UserLoginDto
+
+<h2>Zaloguj się</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" method="post">
+            <!-- Ustalenie metody na 'post' -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label> <!-- Dodanie widocznej etykiety -->
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Hasło</label> <!-- Dodanie widocznej etykiety -->
+                <input asp-for="Password" class="form-control" type="password" /> <!-- Ustawienie typu na 'password' -->
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Zaloguj się" class="btn btn-primary" /> <!-- Zmiana etykiety przycisku -->
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Powrót do listy</a> <!-- Możliwość zmiany na odpowiednią akcję -->
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

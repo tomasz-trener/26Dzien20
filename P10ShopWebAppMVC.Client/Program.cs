@@ -1,6 +1,11 @@
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using P06Shop.Shared.Confguration;
+using P06Shop.Shared.Services.AuthService;
 using P06Shop.Shared.Services.ProductService;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +27,22 @@ var uriBuilder = new UriBuilder(appSettingsSection.BaseApiUrl)
 builder.Services.AddHttpClient<IProductService, ProductService>(client => client.BaseAddress = uriBuilder.Uri);
 builder.Services.Configure<AppSettings>(appSettings);
 
+
+// Konfiguracja HttpClient dla AuthService
+builder.Services.AddHttpClient<IAuthService, AuthService>(client => client.BaseAddress = uriBuilder.Uri);
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+    });
+
+builder.Services.AddSession(); // Dodanie sesji
+
+
 var app = builder.Build();
+
+ 
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -35,12 +55,17 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
+app.UseSession();  // Użyj sesji przed routingiem
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Dodanie autentykacji
+app.UseAuthorization();  // Dodanie autoryzacji
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();
