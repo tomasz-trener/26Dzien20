@@ -21,7 +21,7 @@ namespace P05Shop.API.Controllers
         [HttpGet("secret"), Authorize]
         public string SecretText()
         {
-            return "This is a secret text";
+            return "This is a top secret text";
         }
 
         [HttpPost("login")]
